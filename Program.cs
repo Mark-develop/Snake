@@ -55,8 +55,8 @@ namespace Snake
             int gameover = 0;
 
             // Ustawienia okna konsoli.
-            Console.WindowHeight = 16;
-            Console.WindowWidth = 32;
+            Console.WindowHeight = 30;
+            Console.WindowWidth = 120;
             int screenwidth = Console.WindowWidth;
             int screenheight = Console.WindowHeight;
             Random randomnummer = new Random();
