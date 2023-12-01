@@ -95,7 +95,7 @@ namespace Snake
                 for (int i = 0; i < xposlijf.Count(); i++)
                 {
                     Console.SetCursorPosition(xposlijf[i], yposlijf[i]);
-                    Console.Write("¦");
+                    Console.Write("■");
                     if (xposlijf[i] == hoofd.xpos && yposlijf[i] == hoofd.ypos)
                     {
                         // Koniec gry, jeśli głowa wchodzi na ciało.
