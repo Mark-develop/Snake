@@ -10,6 +10,17 @@ namespace Snake
 {
     class Program
     {
+        // // Metoda do czyszczenia konsoli w określonych wymiarach
+        private static void ClearConsole(int screenwidth, int screenheight)
+        {
+            var blackLine = string.Join("", new byte[screenwidth - 2].Select(b => " ").ToArray());
+            Console.ForegroundColor = ConsoleColor.Black;
+            for (int i = 1; i < screenheight - 1; i++)
+            {
+                Console.SetCursorPosition(1, i);
+                Console.Write(blackLine);
+            }
+        }
 
         // Metoda do czyszczenia konsoli w określonych wymiarach
         private static void ClearConsole(int screenwidth, int screenheight)
@@ -36,8 +47,8 @@ namespace Snake
             int gameover = 0;
 
             //windowsize
-            Console.WindowHeight = 18;
-            Console.WindowWidth = 34;
+            Console.WindowHeight = 16;
+            Console.WindowWidth = 32;
             int screenwidth = Console.WindowWidth;
             int screenheight = Console.WindowHeight;
             Random randomnummer = new Random();
@@ -67,9 +78,14 @@ namespace Snake
                     gameover = 1;
                 }
 
+
                 Console.ForegroundColor = ConsoleColor.Green;
 
                 // Obsługa zjedzenia owocu
+
+                // Obsługa zjedzenia owocu
+                Console.ForegroundColor = ConsoleColor.Green;
+
                 if (berryx == hoofd.xpos && berryy == hoofd.ypos)
                 {
                     score++;
@@ -80,6 +96,7 @@ namespace Snake
                 // Rysowanie ciała węża
                 for (int i = 0; i < xposlijf.Count(); i++)
                 {
+
                     // Rysowanie ciała węża
                     Console.SetCursorPosition(xposlijf[i], yposlijf[i]);
                     Console.Write("■");
@@ -89,14 +106,13 @@ namespace Snake
                         gameover = 1;
                     }
                 }
-                
+
                 // Sprawdzenie warunku końca gry (samouderzenie)
                 if (gameover == 1)
                 {
                     break;
                 }
 
-                // Usunięcie ostatniego segmentu ciała, jeśli wąż jest za długi
                 Console.SetCursorPosition(hoofd.xpos, hoofd.ypos);
                 Console.ForegroundColor = hoofd.schermkleur;
                 Console.Write("■");
@@ -108,13 +124,14 @@ namespace Snake
                 buttonpressed = "no";
 
 
+                // Usunięcie ostatniego segmentu ciała, jeśli wąż jest za długi
+
                 if (xposlijf.Count() > score)
                 {
                     xposlijf.RemoveAt(0);
                     yposlijf.RemoveAt(0);
                 }
             }
-
 
             Console.SetCursorPosition(screenwidth / 5, screenheight / 2);
             Console.WriteLine("Game over, Score: " + score);
