@@ -93,7 +93,7 @@ namespace Snake
                 {
                     // Zwiększamy wynik i generujemy nowe położenie jagody.
                     score++;
-                    speed = speed/2;
+                    speed = speed / 2;
                     berryx = randomnummer.Next(1, screenwidth - 2);
                     berryy = randomnummer.Next(1, screenheight - 2);
                 }
@@ -173,9 +173,22 @@ namespace Snake
                     yposlijf.RemoveAt(0);
                 }
             }
+            Console.Clear();
+
+            Console.ForegroundColor = ConsoleColor.Red;
+
             Console.SetCursorPosition(screenwidth / 5, screenheight / 2);
-            Console.WriteLine("Game over, Score: " + score);
+
+            Console.WriteLine("Game Over");
+
             Console.SetCursorPosition(screenwidth / 5, screenheight / 2 + 1);
+
+            Console.WriteLine("Dein Score ist: " + (score-5));
+
+            Console.SetCursorPosition(screenwidth / 5, screenheight / 2 + 2);
+            Console.ReadKey();
+
+            Environment.Exit(0);
         }
     }
 }
