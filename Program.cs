@@ -10,6 +10,17 @@ namespace Snake
 {
     class Program
     {
+        // // Metoda do czyszczenia konsoli w określonych wymiarach
+        private static void ClearConsole(int screenwidth, int screenheight)
+        {
+            var blackLine = string.Join("", new byte[screenwidth - 2].Select(b => " ").ToArray());
+            Console.ForegroundColor = ConsoleColor.Black;
+            for (int i = 1; i < screenheight - 1; i++)
+            {
+                Console.SetCursorPosition(1, i);
+                Console.Write(blackLine);
+            }
+        }
 
         class pixel
         {
@@ -24,8 +35,8 @@ namespace Snake
             int gameover = 0;
 
             //windowsize
-            Console.WindowHeight = 18;
-            Console.WindowWidth = 34;
+            Console.WindowHeight = 16;
+            Console.WindowWidth = 32;
             int screenwidth = Console.WindowWidth;
             int screenheight = Console.WindowHeight;
             Random randomnummer = new Random();
@@ -41,6 +52,65 @@ namespace Snake
             DateTime tijd = DateTime.Now;
             DateTime tijd2 = DateTime.Now;
             string buttonpressed = "no";
+
+
+            // Główna pętla gry
+            while (true)
+            {
+                // Czyszczenie konsoli
+                ClearConsole(screenwidth, screenheight);
+                // Sprawdzenie warunku końca gry (dotknięcie ściany)
+                if (hoofd.xpos == screenwidth - 1 || hoofd.xpos == 0 || hoofd.ypos == screenheight - 1 || hoofd.ypos == 0)
+                {
+                    gameover = 1;
+                }
+
+                // Obsługa zjedzenia owocu
+                Console.ForegroundColor = ConsoleColor.Green;
+
+                if (berryx == hoofd.xpos && berryy == hoofd.ypos)
+                {
+                    score++;
+                    berryx = randomnummer.Next(1, screenwidth - 2);
+                    berryy = randomnummer.Next(1, screenheight - 2);
+                }
+
+                // Rysowanie ciała węża
+                for (int i = 0; i < xposlijf.Count(); i++)
+                {
+                    Console.SetCursorPosition(xposlijf[i], yposlijf[i]);
+                    Console.Write("¦");
+                    if (xposlijf[i] == hoofd.xpos && yposlijf[i] == hoofd.ypos)
+                    {
+                        gameover = 1;
+                    }
+                }
+
+                // Sprawdzenie warunku końca gry (samouderzenie)
+                if (gameover == 1)
+                {
+                    break;
+                }
+
+                // Rysowanie głowy węża i owocu
+                Console.SetCursorPosition(hoofd.xpos, hoofd.ypos);
+                Console.ForegroundColor = hoofd.schermkleur;
+                Console.Write("■");
+                Console.SetCursorPosition(berryx, berryy);
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("■");
+                Console.CursorVisible = false;
+                tijd = DateTime.Now;
+                buttonpressed = "no";
+
+                // Usunięcie ostatniego segmentu ciała, jeśli wąż jest za długi
+                if (xposlijf.Count() > score)
+                {
+                    xposlijf.RemoveAt(0);
+                    yposlijf.RemoveAt(0);
+                }
+            }
+
 
 
 
