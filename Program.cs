@@ -1,16 +1,28 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
-
 namespace Snake
 {
     class Program
     {
-        // Metoda do rysowania ramki wokół planszy
+
+        // Metoda do czyszczenia konsoli w określonym obszarze.
+        private static void ClearConsole(int screenwidth, int screenheight)
+        {
+            var blackLine = string.Join("", new byte[screenwidth - 2].Select(b => " ").ToArray());
+            Console.ForegroundColor = ConsoleColor.Black;
+            for (int i = 1; i < screenheight - 1; i++)
+            {
+                Console.SetCursorPosition(1, i);
+                Console.Write(blackLine);
+            }
+        }
+
+        // Metoda do rysowania ramki wokół obszaru gry.
         private static void DrawBorder(int screenwidth, int screenheight)
         {
             var horizontalBar = string.Join("", new byte[screenwidth].Select(b => "■").ToArray());
@@ -29,6 +41,7 @@ namespace Snake
             }
         }
 
+        // Klasa reprezentująca pojedynczy punkt (pixel) na planszy.
         class pixel
         {
             public int xpos { get; set; }
@@ -41,7 +54,7 @@ namespace Snake
             int score = 5;
             int gameover = 0;
 
-            
+            // Ustawienia okna konsoli.
             Console.WindowHeight = 16;
             Console.WindowWidth = 32;
             int screenwidth = Console.WindowWidth;
@@ -60,11 +73,49 @@ namespace Snake
             DateTime tijd2 = DateTime.Now;
             string buttonpressed = "no";
 
-            // Narysowanie ramki wokół planszy
+            // Rysujemy ramkę tylko raz.
             DrawBorder(screenwidth, screenheight);
 
-                 // Pętla obsługująca ruch węża
-                 while (true)
+            while (true)
+            {
+                ClearConsole(screenwidth, screenheight);
+                if (hoofd.xpos == screenwidth - 1 || hoofd.xpos == 0 || hoofd.ypos == screenheight - 1 || hoofd.ypos == 0)
+                {
+                    gameover = 1;
+                }
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                if (berryx == hoofd.xpos && berryy == hoofd.ypos)
+                {
+                    // Zwiększamy wynik i generujemy nowe położenie jagody.
+                    score++;
+                    berryx = randomnummer.Next(1, screenwidth - 2);
+                    berryy = randomnummer.Next(1, screenheight - 2);
+                }
+                for (int i = 0; i < xposlijf.Count(); i++)
+                {
+                    Console.SetCursorPosition(xposlijf[i], yposlijf[i]);
+                    Console.Write("¦");
+                    if (xposlijf[i] == hoofd.xpos && yposlijf[i] == hoofd.ypos)
+                    {
+                        // Koniec gry, jeśli głowa wchodzi na ciało.
+                        gameover = 1;
+                    }
+                }
+                if (gameover == 1)
+                {
+                    break;
+                }
+                Console.SetCursorPosition(hoofd.xpos, hoofd.ypos);
+                Console.ForegroundColor = hoofd.schermkleur;
+                Console.Write("■");
+                Console.SetCursorPosition(berryx, berryy);
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("■");
+                Console.CursorVisible = false;
+                tijd = DateTime.Now;
+                buttonpressed = "no";
+                while (true)
                 {
                     tijd2 = DateTime.Now;
                     if (tijd2.Subtract(tijd).TotalMilliseconds > 500) { break; }
@@ -93,10 +144,9 @@ namespace Snake
                         }
                     }
                 }
-                // Dodanie pozycji głowy węża do listy pozycji ciała
                 xposlijf.Add(hoofd.xpos);
                 yposlijf.Add(hoofd.ypos);
-                // Aktualizacja pozycji głowy węża na podstawie wybranego kierunku
+                // Ruchy w klawiaturze.
                 switch (movement)
                 {
                     case "UP":
@@ -112,20 +162,15 @@ namespace Snake
                         hoofd.xpos++;
                         break;
                 }
-
-
-
-
-
-
+                if (xposlijf.Count() > score)
+                {
+                    xposlijf.RemoveAt(0);
+                    yposlijf.RemoveAt(0);
+                }
+            }
             Console.SetCursorPosition(screenwidth / 5, screenheight / 2);
             Console.WriteLine("Game over, Score: " + score);
             Console.SetCursorPosition(screenwidth / 5, screenheight / 2 + 1);
         }
-        
-
-
-
     }
-
 }
