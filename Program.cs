@@ -78,17 +78,22 @@ namespace Snake
 
             while (true)
             {
+                int speed = 200;
+
                 ClearConsole(screenwidth, screenheight);
                 if (hoofd.xpos == screenwidth - 1 || hoofd.xpos == 0 || hoofd.ypos == screenheight - 1 || hoofd.ypos == 0)
                 {
                     gameover = 1;
                 }
 
+
+
                 Console.ForegroundColor = ConsoleColor.Green;
                 if (berryx == hoofd.xpos && berryy == hoofd.ypos)
                 {
                     // Zwiększamy wynik i generujemy nowe położenie jagody.
                     score++;
+                    speed = speed/2;
                     berryx = randomnummer.Next(1, screenwidth - 2);
                     berryy = randomnummer.Next(1, screenheight - 2);
                 }
@@ -118,7 +123,7 @@ namespace Snake
                 while (true)
                 {
                     tijd2 = DateTime.Now;
-                    if (tijd2.Subtract(tijd).TotalMilliseconds > 500) { break; }
+                    if (tijd2.Subtract(tijd).TotalMilliseconds > speed) { break; }
                     if (Console.KeyAvailable)
                     {
                         ConsoleKeyInfo toets = Console.ReadKey(true);
