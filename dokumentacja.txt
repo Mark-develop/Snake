@@ -1,0 +1,51 @@
+1. Opis projektu
+Projekt Snake to klasyczna gra węża napisana w języku C# z użyciem konsoli. Gracz kontroluje węża, poruszając go po planszy w poszukiwaniu jagód. Celem gry jest zdobywanie punktów poprzez zjadanie jagód, jednocześnie unikając zderzeń z krawędziami planszy i własnym ciałem.
+
+2. Struktura projektu
+2.1. Klasa Program
+Główna klasa projektu, zawiera logikę gry, obsługę klawiszy, rysowanie planszy, oraz główną pętlę gry.
+
+2.1.1. Metoda ClearConsole(int screenwidth, int screenheight)
+Metoda odpowiedzialna za czyszczenie konsoli w określonym obszarze gry.
+
+2.1.2. Metoda DrawBorder(int screenwidth, int screenheight)
+Metoda rysująca ramkę wokół obszaru gry.
+
+2.1.3. Klasa pixel
+Reprezentuje pojedynczy punkt (pixel) na planszy.
+
+2.1.4. Metoda Main(string[] args)
+Główna metoda programu, zawierająca logikę gry, obsługę klawiszy, oraz pętlę gry.
+
+2.2. Zmienne i struktury danych
+score: Zmienna przechowująca liczbę zdobytych punktów.
+gameover: Zmienna informująca o zakończeniu gry.
+hoofd: Obiekt klasy pixel, reprezentujący głowę węża.
+movement: Zmienna określająca aktualny kierunek ruchu węża.
+xposlijf i yposlijf: Listy przechowujące pozycje ciała węża.
+berryx i berryy: Pozycja jagody na planszy.
+tijd i tijd2: Zmienne czasowe używane do kontrolowania prędkości gry.
+buttonpressed: Informacja o tym, czy przycisk został wciśnięty.
+3. Logika gry
+3.1. Warunki zakończenia gry
+Gra kończy się, gdy głowa węża zderzy się z krawędziami planszy lub własnym ciałem.
+
+3.2. Zasady zdobywania punktów
+Punkty są zdobywane poprzez zjedzenie jagody. Po zjedzeniu jagody, zwiększa się wynik, a jagoda pojawia się w losowym miejscu na planszy.
+
+3.3. Sterowanie wężem
+Gracz steruje wężem za pomocą klawiszy strzałek: UpArrow, DownArrow, LeftArrow, RightArrow.
+
+4. Grafika
+Gra wykorzystuje znaki konsolowe do przedstawienia węża, jagody i planszy. Kolory konsoli są używane do odróżnienia elementów gry.
+
+5. Parametry gry
+Wysokość okna konsoli: 30
+Szerokość okna konsoli: 120
+6. Prędkość gry
+Prędkość gry jest kontrolowana za pomocą zmiennej speed. Po zjedzeniu jagody prędkość jest zwiększana, co zwiększa trudność gry.
+
+7. Zakończenie gry
+Gra kończy się wyświetleniem komunikatu "Game over" wraz z uzyskanym wynikiem.
+
+Dokumentacja przygotowana przez [Mark Lievientsov / Lizaveta Holub] [01.12.2023].
